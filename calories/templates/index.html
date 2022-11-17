@@ -1,0 +1,17 @@
+Hi {{ user.username }}!
+
+<p><a href="{% url 'logout' %}">Log Out</a></p>
+
+<script>
+    function httpPost(url, callback_function)
+    {
+        fetch(url, {
+          method: "POST",
+          headers: {'Content-Type': 'application/json'},
+          body: "",
+          credentials: "same-origin", // https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters
+        }).then(function(response) {
+            return response.json();
+        }).then(callback_function);
+    }
+</script>
