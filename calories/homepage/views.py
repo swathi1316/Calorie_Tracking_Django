@@ -1,3 +1,5 @@
+from http.client import HTTPResponse
+
 from django.http import JsonResponse
 from django.views.generic import TemplateView
 
@@ -5,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from .forms import Register
+from django.http import HttpResponse
 
 import os
 import requests
@@ -12,7 +15,7 @@ from requests import request
 
 # class HomepageView(LoginRequiredMixin, TemplateView):
 #     template_name = 'index.html'
-#     login_url = '/auth/login/'
+#     login_url = '/auth/registration/'
 #     redirect_field_name = 'redirect_to'
 #
 #     def get_context_data(self, **kwargs):
@@ -42,16 +45,19 @@ from requests import request
 
 from django.shortcuts import render, redirect
 from .forms import Register
+from django.core.exceptions import ObjectDoesNotExist
 
 
 # Create your views here.
-def UserSignup(response):
+def usersignup(response):
     if response.method == "POST":
         form = Register(response.POST)
         if form.is_valid():
             form.save()
-            return redirect("base.html")
     else:
         form = Register()
 
-    return render(response, "register.html", {"form": form})
+    return render(response, "register/register.html", {"form": form})
+
+def homeview(request):
+    return render(request,"home.html")

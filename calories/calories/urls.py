@@ -19,5 +19,9 @@ from homepage import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("",views.UserSignup, name ="register")
+    path("", views.homeview, name="home"),
+    path("register/", views.usersignup, name="register"),
+    path('', include("django.contrib.auth.urls"),name='registration'),
+
 ]
+print(urlpatterns)

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}
+Login
+{% endblock %}
+
+{% load crispy_forms_tags %}
+
+<div id="content" name="content" class="homepage">
+{% block content %}
+	<section class="vh-75">
+  		<div class="container py-5 h-100">
+    		<div class="row d-flex justify-content-center align-items-center h-100">
+      			<div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        			<div class="card shadow-2-strong" style="border-radius: 1rem;">
+          				<div class="card-body p-5 text-center">
+            				<h3 class="mb-5">Log In</h3>
+     						<form method="post" class="form-group mx-100 mx-auto mt-2 pt-1">
+									{% csrf_token %}
+									{{form|crispy}}
+									<p>Don't have an accoount? Create one <a href="/register">here</a></p>
+									<button type="submit" class="btn btn-success">Login</button>
+    						</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+</div>
+
