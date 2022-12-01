@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+{% block title %}
+Login
+{% endblock %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.2/css/bootstrap-responsive.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.js"></script>
+
+{% load crispy_forms_tags %}
+<div id="content" name="content" class="homepage">
+{% block content %}
+<!--    <link href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/smart_wizard.min.css" rel="stylesheet" type="text/css" />-->
+<!--    <link href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/smart_wizard_theme_arrows.min.css" rel="stylesheet" type="text/css" />-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">-->
+<!--    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">-->
+<!--    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>-->
+
+<!--    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/jquery.smartWizard.min.js"></script>-->
+
+<!-- <section class="container">-->
+<!--&lt;!&ndash;     <div class="row d-flex justify-content-center mt-200"> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> User Details </button> </div> &lt;!&ndash; Modal &ndash;&gt;&ndash;&gt;-->
+<!--     <section class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+<!--         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">-->
+<!--             <div class="modal-content">-->
+<!--                 <div class="modal-header">-->
+<!--                     <h5 class="modal-title" id="exampleModalLabel">User Details</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>-->
+<!--                 </div>-->
+<!--                 <div class="modal-body">-->
+<!--                     <div id="UserDetails">-->
+<!--                         <ul>-->
+<!--                             <li><a href="#step-1">Step 1<br /><small>Birthdate</small></a></li>-->
+<!--                             <li><a href="#step-2">Step 2<br /><small>Weight and Height</small></a></li>-->
+<!--                             <li><a href="#step-3">Step 3<br /><small>Fitness and Goal</small></a></li>-->
+<!--                             <li><a href="#step-4">Step 4<br /><small></small></a></li>-->
+<!--                         </ul>-->
+<!--                         <div class="mt-4">-->
+<!--                             <div id="step-1">-->
+<!--                                 <div class="row">-->
+<!--                                     <div class="col-md-6"> <input type="text" class="form-control " placeholder="Birthdate" required> </div>-->
+<!--                                        <div class="col-sm-6">-->
+<!--                                            <div class="input-group date" id="datepicker">-->
+<!--                                                <input type="text" class="form-control">-->
+<!--                                                <span class="input-group-append">-->
+<!--                                                    <span class="input-group-text bg-white">-->
+<!--                                                            <i class="fa fa-calendar"></i>-->
+<!--                                                    </span>-->
+<!--                                                </span>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                 </div>-->
+<!--                             </div>-->
+<!--                              <script type="text/javascript">-->
+<!--                                    $(function() {-->
+<!--                                    $('#datepicker').datepicker();-->
+<!--                                    });-->
+<!--                              </script>-->
+<!--                             <div id="step-2">-->
+<!--                                 <div class="row">-->
+<!--                                     <div class="col-md-6"> <input type="text" class="form-control" placeholder="Weight" required> </div>-->
+<!--                                     <div class="col-md-6"> <input type="text" class="form-control" placeholder="Weight_Goal" required> </div>-->
+<!--                                 </div>-->
+<!--                                 <div class="row mt-3">-->
+<!--                                     <div class="col-md-6"> <input type="text" class="form-control" placeholder="Height" required> </div>-->
+<!--                                 </div>-->
+<!--                             </div>-->
+<!--                          <div id="step-3" class="">-->
+<!--                                 <div class="row">-->
+<!--                                     <div class="col-md-6"> <input type="text" class="form-control" placeholder="Fitness" required> </div>-->
+<!--                                        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">-->
+<!--                                            <option selected>Choose...</option>-->
+<!--                                            <option value="1">One</option>-->
+<!--                                            <option value="2">Two</option>-->
+<!--                                            <option value="3">Three</option>-->
+<!--                                        </select>-->
+<!--                                 </div>-->
+<!--                                 <div class="row mt-3">-->
+<!--                                     <div class="col-md-6"> <input type="text" class="form-control" placeholder="Goal" required> </div>-->
+<!--                                 </div>-->
+<!--                             </div>-->
+<!--                             <div id="step-4" class="">-->
+<!--                                 <div class="row">-->
+<!--                                     <div class="col-md-12"> <span>Thanks For submitting your details with BBBootstrap.com. we will send you a confirmation email. We will review your details and revert back.</span> </div>-->
+<!--                                 </div>-->
+<!--                             </div>-->
+<!--                         </div>-->
+<!--                     </div>-->
+<!--                 </div>-->
+<!--             </div>-->
+<!--         </div>-->
+<!--     </section>-->
+<!--     -->
+<!--     &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+
+    <!-- JQUERY STEP -->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-steps/1.1.0/jquery.steps.min.js"></script>-->
+<!--    <div class="wrapper" bg-white>-->
+<!--    <form action="">-->
+<!--            <div id="wizard">-->
+<!--            &lt;!&ndash; SECTION 1 &ndash;&gt;-->
+<!--                <h4></h4>-->
+<!--                <section>-->
+<!--                    <div class="input-group input-daterange">-->
+<!--                        <div class="form-row"><input type="text" id="dateofbirth" class="form-control text-left mr-2"></div>-->
+<!--                        <label class="ml-3 form-control-placeholder" id="dob" for="dateofbirth">Date Of Birth</label>-->
+<!--                        <span class="fa fa-calendar" id="fa-1"></span>-->
+<!--                    </div>-->
+<!--                    <div class="form-row"> <input type="text" class="form-control" placeholder="Email"> </div>-->
+<!--                    <div class="form-row"> <input type="text" class="form-control" placeholder="Phone number"> </div>-->
+<!--                    <div class="form-row"> <input type="text" class="form-control" placeholder="Street address"> </div>-->
+<!--                </section> &lt;!&ndash; SECTION 2 &ndash;&gt;-->
+<!--                <h4></h4>-->
+<!--                <section>-->
+<!--                    <div class="form-row"> <input type="text" class="form-control" placeholder="country"> </div>-->
+<!--                    <div class="form-row"> <input type="text" class="form-control" placeholder="zip code"> </div>-->
+<!--                    <div class="form-row" style="margin-bottom: 18px"> <textarea name="" id="" class="form-control" placeholder="Any order note about delivery or special offer" style="height: 108px"></textarea> </div>-->
+<!--                </section> &lt;!&ndash; SECTION 3 &ndash;&gt;-->
+<!--            <h4></h4>-->
+<!--            <section>-->
+<!--                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">-->
+<!--                    <circle class="path circle" fill="none" stroke="#73AF55" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1" />-->
+<!--                    <polyline class="path check" fill="none" stroke="#73AF55" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 " />-->
+<!--                </svg>-->
+<!--                <p class="success">Order placed successfully. Your order will be dispacted soon. meanwhile you can track your order in my order section.</p>-->
+<!--            </section>-->
+<!--        </div>-->
+<!--    </form>-->
+<!--    </div>-->
+
+
+    <section class="vh-75">
+  		<div class="container py-5 h-100">
+    		<div class="row d-flex justify-content-center align-items-center h-100">
+      			<div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        			<div class="card shadow-2-strong" style="border-radius: 1rem;">
+          				<div class="card-body p-5 text-center">
+                            <h3 class="mb-5">User Details</h3>
+                        <form method = "POST">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class = "row">
+                                    <span class="form-label">Date Of Birth</span>
+                                   birth_date:<input class="form-control" type="date" required>
+                                    </div>
+                                </div>
+                            <div class = "row">
+                            <div class="form-group">
+                                <span class="form-label">Weight</span>
+                                weight:<input class="form-control" type="text" placeholder="">
+                            </div>
+                                <div class="form-group">
+                                    <span class="form-label">WeightGoal</span>
+                                    weight_goal:<input class="form-control" type="text" placeholder="">
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <span class="form-label">Height</span>
+                                height:<input class="form-control" type="text" placeholder="">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <select class="form-control" required>
+                                        Goal:<option value="" selected hidden>Goal</option>
+                                        <option>maintain_weight</option>
+                                        <option>loose_weight</option>
+                                        <option>gain_weight</option>
+                                    </select>
+                                    <span class="select-arrow"></span>
+                                </div>
+                            </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <select class="form-control" required>
+                                        Fitness:<option value="" selected hidden>Fitness</option>
+                                        <option>no_exercise</option>
+                                        <option>mild_exercise</option>
+                                        <option>regular_exercise</option>
+                                    </select>
+                                    <span class="select-arrow"></span>
+                                </div>
+                            </div>
+                            <div class="form-btn">
+                                <button class="submit-btn">Book Now</button>
+                            </div>
+                            </div>
+                    </form>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    </section>
+    {% endblock %}
+</div>
