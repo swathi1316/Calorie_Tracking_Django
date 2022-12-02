@@ -66,7 +66,7 @@ def usersignup(response):
         form = Register(response.POST)
         if form.is_valid():
             form.save()
-            return redirect('user/details.html')
+            return redirect('details')
     else:
         form = Register()
 
