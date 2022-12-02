@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from .forms import Register
 from .forms import UserForm
-from .forms import User
+from .forms import User,SearchForm
 from django.http import HttpResponse
 from .models import UserDetails
 from django.template import RequestContext
@@ -61,11 +61,12 @@ user = get_user_model()
 
 # Create your views here.
 def usersignup(response):
+    print(response.method)
     if response.method == "POST":
         form = Register(response.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('user/details.html')
     else:
         form = Register()
 
@@ -75,21 +76,31 @@ def homeview(request):
     return render(request,"home.html")
 
 
+
 def SearchTemplateView(request):
-    api_url = 'https://api.calorieninjas.com/v1/nutrition?query='
-    query = 'chicken burger'
-    response = requests.get(api_url + query, headers={'X-Api-Key': 'EleW0qdfUPQTtO74is+KiA==ZnkvSqaSfxfUb2cc'})
-    if response.status_code == requests.codes.ok:
-        print(response.text)
+    print(request.method)
+    if request.method == "POST":
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            search_field = form.cleaned_data['scalorie']
+            api_url = 'https://api.calorieninjas.com/v1/nutrition?query='
+            query = search_field
+            print(query)
+            response = requests.get(api_url + query, headers={'X-Api-Key': 'EleW0qdfUPQTtO74is+KiA==ZnkvSqaSfxfUb2cc'})
+            if response.status_code == requests.codes.ok:
+                print(response.text)
+            else:
+                print("Error:", response.status_code, response.text)
+
+            tweet_response = {'results':response.json()}
+            print(tweet_response)
+            return render(request,"search/search.html",{'tweet_response':tweet_response})
     else:
-        print("Error:", response.status_code, response.text)
-
-    tweet_response = {'results':response.json()}
-    print(tweet_response)
-    return render(request,"search/search.html", {'tweet_response':tweet_response})
+        form = SearchForm()
+    return render(request, "search/search.html", {"form": form})
 
 
-@login_required()
+
 def userdetailview(response):
     if response.method == "POST":
         username = response.user.id
@@ -98,7 +109,7 @@ def userdetailview(response):
             if UserDetails.objects.filter(creator=username).exists():
                 form.owner = username
                 form.save()
-                return redirect('home')
+                return redirect('search')
             else:
                 form.save()
                 return redirect('home')

@@ -1,24 +1,8 @@
 {% extends 'base.html' %}
-{% block title %}Search{% endblock %}
-{% load crispy_forms_tags %}
-<div id="content" name="content" class="homepage">
+{% block title %}SearchResults{% endblock %}
+<b id="content" name="content" class="homepage">
 {% block content %}
-    <div class="col-lg-4 col-lg-offset-4 mx-auto mt-lg-5 py-lg-5 mt-5 ">
-        <form method="POST">
-<!--            <div class="input-group mb-3"  id="search" >-->
-                {% csrf_token %}
-                {{form|crispy}}
-                </hr>
-<!--            <div class="input-group-append">-->
-                <button type="submit" class="btn btn-success">Search</button>
-<!--            </div>-->
-<!--            </div>-->
-        </form>
-    </div>
-
-
-    <!--   ? &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;nutrition facts&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
-    <style>
+ <style>
 .image {
   width: 250px;
   float: left;
@@ -344,48 +328,5 @@ p {
   </p>
     {% endfor %}
 </section>
-
-
-    {% endblock %}
+{% endblock %}
 </div>
-<!--<scrpt>-->
-<!--    function httpPost(url, callback_function)-->
-<!--    {-->
-<!--        fetch(url, {-->
-<!--          method: "POST",-->
-<!--          headers: {'Content-Type': 'application/json'},-->
-<!--          body: "",-->
-<!--          credentials: "same-origin", // https://developer.mozilla.org/en-US/docs/Web/API/fetch#parameters-->
-<!--        }).then(function(response) {-->
-<!--            return response.json();-->
-<!--        }).then(callback_function);-->
-<!--    }-->
-
-<!--    function appendArticleDiv(article, parentTag)-->
-<!--    {-->
-<!--        let articleTag = document.createElement("div");-->
-<!--        let articleContent = document.createElement("span");-->
-<!--        articleContent.innerText = article.full_text;-->
-<!--        articleTag.append(articleContent);-->
-<!--        parentTag.append(articleTag);-->
-<!--        parentTag.append(document.createElement("br"));-->
-<!--        parentTag.append(document.createElement("hr"));-->
-<!--    }-->
-
-<!--    function callbackFunction(data)-->
-<!--    {-->
-<!--        let articlesDivTag = document.getElementById("tweets");-->
-<!--        console.log(data.results.globalObjects.tweets);-->
-<!--        tweets = data.results.globalObjects.tweets;-->
-<!--        Object.entries(tweets).forEach((result) => appendArticleDiv(result[1], articlesDivTag));-->
-
-<!--    }-->
-
-<!--  <h2 style="color:#FFFFFF;">Calorie Tracking</h2>-->
-<!--  <p style="color:#FFFFFF;">Calories of carrot <strong>-->
-<!--        {{tweet_response.items}}-->
-<!--  </strong></p>-->    <!--  <h2 style="color:#FFFFFF;">Calorie Tracking</h2>-->
-<!--  <p style="color:#FFFFFF;">Calories of carrot <strong>-->
-<!--        {{tweet_response.items}}-->
-<!--  </strong></p>-->
-
