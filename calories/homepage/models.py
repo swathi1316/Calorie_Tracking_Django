@@ -5,6 +5,7 @@ from model_utils.models import TimeStampedModel
 from django.urls import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.conf import settings
+
 class UserDetails(models.Model):
     goal = (
         ("maintain_weight", "maintain_weight"),
@@ -17,7 +18,14 @@ class UserDetails(models.Model):
         ("mild_exercise", "mild_exercise"),
         ("regular_exercise", "regular_exercise"),
     )
+    gender = (
+        ("male", "male"),
+        ("female", "female"),
+        ("other", "other")
+    )
     birth_date = models.DateField()
+    Gender = models.CharField("Gender", max_length=50,
+                            choices=gender)
     weight = models.DecimalField(
         default=1,
         validators=[MaxValueValidator(300), MinValueValidator(1)],
@@ -43,8 +51,7 @@ class UserDetails(models.Model):
                             choices=exercise)
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        null=False,
-        primary_key= True,
+        unique=True,
         on_delete=models.CASCADE)
 
     def age(self):
@@ -70,11 +77,12 @@ class Food(models.Model):
     fat = models.DecimalField(max_digits=6,decimal_places=2)
     protein = models.DecimalField(max_digits=6,decimal_places=2)
     carbs = models.DecimalField(max_digits=6,decimal_places=2)
-    cholestrol = models.DecimalField(max_digits=6,decimal_places=2)
+    cholesterol = models.DecimalField(max_digits=6,decimal_places=2)
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         null=True,
         on_delete=models.CASCADE
     )
+    created = models.DateTimeField(auto_now_add=True)
 
 # Create your models here.max_digits=5,

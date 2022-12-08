@@ -24,6 +24,6 @@ urlpatterns = [
     path("search/", views.SearchTemplateView, name="search"),
     path('registration/', include("django.contrib.auth.urls"),name='login'),
     path('user/', views.userdetailview,name='details'),
-
+    path('calo/tracking/', views.UserTracking, name='tracking'),
 ]
 print(urlpatterns)

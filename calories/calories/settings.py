@@ -124,5 +124,5 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 LOGIN_URL = 'login'
 
-LOGIN_REDIRECT_URL = "search"
+LOGIN_REDIRECT_URL = "/calo/tracking"
 LOGOUT_REDIRECT_URL = "/"
