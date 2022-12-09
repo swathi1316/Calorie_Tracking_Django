@@ -3,11 +3,17 @@
 Tracking
 {% endblock %}
 {% load crispy_forms_tags %}
-
+<style>
+	.homepage{
+		background-color: #fcfbe6;
+		background-image:none;
+		}
+</style>
 <div id="content" name="content" class="homepage">
 {% block content %}
+
     <section class="vh-75">
-  		<div class="container float-lg-left mt-5 my-5">
+  		<div class="container">
     		<div class="row">
       			<div class="col-12 col-md-8 col-lg-6 col-xl-5">
         			<div class="card shadow-2-strong" style="border-radius: 1rem;">
@@ -25,24 +31,32 @@ Tracking
 		</div>
 	</section>
 
-	<div class="row ml-4">
-    {% for product in products %}
-    <div class="col-sm-3 d-flex align-items-stretch" style="margin-top:30px" >
-        <div class="card padding-0 " style="width: 24rem;">
-            <a href="/products/{{product.id}}">
-            {% if product.image %}
-            <img class="card-img-top" src="{{product.image.url}}" alt="Card image cap">
-            {% endif %}
-            <div class="card-body">
-                <h5 class="card-title"><b>{{product.name}}</b></h5>
-                <p class="card-text">{{product.description}}</p>
-                <h5 style="text-align: right"><b>$ {{product.price}}</b></h5>
-                </br>
-            </div>
-               </a>
-        </div>
 
-    </div>
+    {% for date1,calo in history.items %}
+
+			{{date1}}
+		<br>
+		 {% for category,ing in calo.items %}
+	<div class="row">
+		{{category}}
+		<br>
+		<br>
+				{% for ing1 in ing %}
+    	<div class="col-sm-3 align-items-stretch" style="margin-top:30px" >
+       	 <div class="card padding-5 " style="width: 20rem;">
+					<div class="card-body">
+                		<h5 class="card-title"><b>{{ing1.name}}</b></h5>
+               	 		<p class="card-text">Calories {{ing1.f_calories}} g</p>
+                		<p class="card-text">carbs {{ing1.carbs}} g</p>
+						<p class="card-text">Protein {{ing1.protein}} g</p>
+						<p class="card-text">Fat {{ing1.fat}} g</p>
+                		</br>
+            		</div>
+
+        	</div>
+    	</div>
+			{% endfor %}
+            {% endfor %}
     {% endfor %}
 </div>
 

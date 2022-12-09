@@ -87,7 +87,7 @@ def homeview(request):
 def ApiView(param):
     api_url = 'https://api.calorieninjas.com/v1/nutrition?query='
     query = param
-    print(query)
+    #print(query)
     response = requests.get(api_url + query, headers={'X-Api-Key': 'EleW0qdfUPQTtO74is+KiA==ZnkvSqaSfxfUb2cc'})
     if response.status_code == requests.codes.ok:
         print(response.text)
@@ -100,7 +100,7 @@ def ApiView(param):
 
 
 def SearchTemplateView(request):
-    print(request.method)
+    #print(request.method)
     if request.method == "POST":
         form = SearchForm(request.POST)
         if form.is_valid():
@@ -161,14 +161,14 @@ def UserTracking(request):
         form = CaloForm(request.POST)
         if form.is_valid():
             ing_name = form.cleaned_data['name']
-            print(ing_name)
+            #print(ing_name)
             category = form.cleaned_data['category']
-            print(category)
+            #print(category)
             ing_reponse =ApiView(ing_name)
-            print(ing_reponse)
+            # print(ing_reponse)
             ing_response = ing_reponse['results']['items']
-            print(len(ing_response))
-            print(ing_response)
+            # print(len(ing_response))
+            # print(ing_response)
             food = Food()
             for nutrientdict in ing_response:
                 food.name = nutrientdict['name']
@@ -182,40 +182,281 @@ def UserTracking(request):
                 print(request.user)
                 food.creator = request.user
                 food.save()
-            q1 = Food.objects.filter(creator=request.user)
-            q2 = q1.filter(created=timezone.now())
-            print(q2)
-            history={}
-            eachday = Food.objects.values('created')
-            print(eachday)
-            for day in eachday.values():
-                print(day)
-                eday=day['created']
-                # currentday = datetime.strptime(str(eday), '%Y-%m-%d').date()
-                # currentday = str(eday).strip()
-                # print(eday)
-                currentday = date.strftime(eday,"%m-%d-%Y")
-                if currentday not in history:
-                    history[currentday] = day['category']
-                    list1 = []
-                    if history[currentday] == 'breakfast':
-                        if day.keys() != 'created' or day.keys() != 'creator' or day.keys() != 'category':
-                            dict1 ={}
-                            dict1['name'] = day['name']
-                            dict1['serving_size'] = day['serving_size']
-                            dict1['calories'] = day['f_calories']
-                            dict1['fat'] = day['fat']
-                            dict1['carbs'] = day['carbs']
-                            dict1['protein'] = day['protein']
-                            list1.append(dict1)
-                            print(list1)
-                        history[currentday][day[category]] = list1
-            print(history)
-
-            return redirect('home')
+            # q1 = Food.objects.filter(creator=request.user)
+            # q2 = q1.filter(created=timezone.now())
     else:
         form = CaloForm()
-    return render(request, "user/calo.html", {"form": form})
+
+    today1 = date.today()
+    today = date.strftime(today1, "%m-%d-%Y")
+    history = {}
+    eachday = Food.objects.filter(creator=request.user,created=date.today())
+    for day in eachday.values():
+        print(day)
+        eday = day['created']
+        category = day['category']
+        currentday = date.strftime(eday, "%m-%d-%Y")
+        today1 = date.today()
+        today = date.strftime(today1, "%m-%d-%Y")
+
+        if currentday == today:
+            if today not in history:
+                history[today] = {}
+
+            if category not in history[today]:
+                history[today][category] = []
+            history[today][category].append(day)
+
+    return render(request, "user/calo.html", {"form": form, "history": history})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   #
+                # for date1, values in history.items():
+                #     for category, food_items in values.items():
+                #         for food in food_items:
+
+
+
+                # # currentday = datetime.strptime(str(eday), '%Y-%m-%d').date()
+                # # currentday = str(eday).strip()
+                # # print(eday)
+                # currentday = date.strftime(eday,"%m-%d-%Y")
+                # today1 = date.today()
+                # today = date.strftime(today1,"%m-%d-%Y")
+                # if currentday == today:
+                #     if currentday not in history:
+                #         print('b')
+                #         history[currentday] = []
+                #         for cday, catelist in history.items():
+                #             print(len(catelist))
+                #             if len(catelist) == 0:
+                #                 history[cday].append({day['category']: []})
+                #                 for catedict in catelist:
+                #                     for categry, itemlist in catedict.items():
+                #                         if day['category'] == 'breakfast':
+                #                             if day.keys() != 'created' or day.keys() != 'creator' or day.keys() != 'category':
+                #                                 dict1 = {}
+                #                                 dict1['name'] = day['name']
+                #                                 dict1['serving_size'] = day['serving_size']
+                #                                 dict1['calories'] = day['f_calories']
+                #                                 dict1['fat'] = day['fat']
+                #                                 dict1['carbs'] = day['carbs']
+                #                                 dict1['protein'] = day['protein']
+                #                                 catedict[categry].append(dict1)
+                #                         elif day['category'] == 'lunch':
+                #                             if day.keys() != 'created' or day.keys() != 'creator' or day.keys() != 'category':
+                #                                 dict1 = {}
+                #                                 dict1['name'] = day['name']
+                #                                 dict1['serving_size'] = day['serving_size']
+                #                                 dict1['calories'] = day['f_calories']
+                #                                 dict1['fat'] = day['fat']
+                #                                 dict1['carbs'] = day['carbs']
+                #                                 dict1['protein'] = day['protein']
+                #                                 catedict[categry].append(dict1)
+                #                         elif day['category'] == 'dinner':
+                #                             if day.keys() != 'created' or day.keys() != 'creator' or day.keys() != 'category':
+                #                                 dict1 = {}
+                #                                 dict1['name'] = day['name']
+                #                                 dict1['serving_size'] = day['serving_size']
+                #                                 dict1['calories'] = day['f_calories']
+                #                                 dict1['fat'] = day['fat']
+                #                                 dict1['carbs'] = day['carbs']
+                #                                 dict1['protein'] = day['protein']
+                #                                 catedict[categry].append(dict1)
+                #                         elif day['category'] == 'snacks':
+                #                             if day.keys() != 'created' or day.keys() != 'creator' or day.keys() != 'category':
+                #                                 dict1 = {}
+                #                                 dict1['name'] = day['name']
+                #                                 dict1['serving_size'] = day['serving_size']
+                #                                 dict1['calories'] = day['f_calories']
+                #                                 dict1['fat'] = day['fat']
+                #                                 dict1['carbs'] = day['carbs']
+                #                                 dict1['protein'] = day['protein']
+                #                                 catedict[categry].append(dict1)
+                #                         else:
+                #                             catedict[categry].append("No updates today")
+                #     else:
+                #         for cday, catelist in history.items():
+                #             print(len(catelist))
+                #             if len(catelist) == 0:
+                #                 history[cday].append({day['category']: []})
+                #                 for catedict in catelist:
+                #                     for categry, itemlist in catedict.items():
+                #                         if day['category'] == 'breakfast':
+                #                             if day.keys() != 'created' or day.keys() != 'creator' or day.keys() != 'category':
+                #                                 dict1 = {}
+                #                                 dict1['name'] = day['name']
+                #                                 dict1['serving_size'] = day['serving_size']
+                #                                 dict1['calories'] = day['f_calories']
+                #                                 dict1['fat'] = day['fat']
+                #                                 dict1['carbs'] = day['carbs']
+                #                                 dict1['protein'] = day['protein']
+                #                                 catedict[categry].append(dict1)
+                #                         elif day['category'] == 'lunch':
+                #                             if day.keys() != 'created' or day.keys() != 'creator' or day.keys() != 'category':
+                #                                 dict1 = {}
+                #                                 dict1['name'] = day['name']
+                #                                 dict1['serving_size'] = day['serving_size']
+                #                                 dict1['calories'] = day['f_calories']
+                #                                 dict1['fat'] = day['fat']
+                #                                 dict1['carbs'] = day['carbs']
+                #                                 dict1['protein'] = day['protein']
+                #                                 print("ultranewuser:{}".format(dict1))
+                #                                 catedict[categry].append(dict1)
+                #                         elif day['category'] == 'dinner':
+                #                             if day.keys() != 'created' or day.keys() != 'creator' or day.keys() != 'category':
+                #                                 dict1 = {}
+                #                                 dict1['name'] = day['name']
+                #                                 dict1['serving_size'] = day['serving_size']
+                #                                 dict1['calories'] = day['f_calories']
+                #                                 dict1['fat'] = day['fat']
+                #                                 dict1['carbs'] = day['carbs']
+                #                                 dict1['protein'] = day['protein']
+                #                                 catedict[categry].append(dict1)
+                #                         elif day['category'] == 'snacks':
+                #                             if day.keys() != 'created' or day.keys() != 'creator' or day.keys() != 'category':
+                #                                 dict1 = {}
+                #                                 dict1['name'] = day['name']
+                #                                 dict1['serving_size'] = day['serving_size']
+                #                                 dict1['calories'] = day['f_calories']
+                #                                 dict1['fat'] = day['fat']
+                #                                 dict1['carbs'] = day['carbs']
+                #                                 dict1['protein'] = day['protein']
+                #                                 catedict[categry].append(dict1)
+                #                         else:
+                #                             catedict[categry].append("No updates today")
+                #             else:
+                #                 for catedict in catelist:
+                #                     print(day['category'])
+                #                     print(catelist)
+                #                     if day['category'] not in catedict:
+                #                         print('x')
+                #                         print("category:{}".format(day['category']))
+                #                         history[cday].append({day['category']: []})
+                #                         for categry, itemlist in catedict.items():
+                #                             if day['category'] == 'breakfast':
+                #                                 if day.keys() != 'created' or day.keys() != 'creator' or day.keys() != 'category':
+                #                                     dict1 = {}
+                #                                     dict1['name'] = day['name']
+                #                                     dict1['serving_size'] = day['serving_size']
+                #                                     dict1['calories'] = day['f_calories']
+                #                                     dict1['fat'] = day['fat']
+                #                                     dict1['carbs'] = day['carbs']
+                #                                     dict1['protein'] = day['protein']
+                #                                     catedict[categry].append(dict1)
+                #                             elif day['category'] == 'lunch':
+                #                                 if day.keys() != 'created' or day.keys() != 'creator' or day.keys() != 'category':
+                #                                     dict1 = {}
+                #                                     dict1['name'] = day['name']
+                #                                     dict1['serving_size'] = day['serving_size']
+                #                                     dict1['calories'] = day['f_calories']
+                #                                     dict1['fat'] = day['fat']
+                #                                     dict1['carbs'] = day['carbs']
+                #                                     dict1['protein'] = day['protein']
+                #                                     catedict[categry].append(dict1)
+                #                                     print("new_cate_everytime:{}".format(dict1))
+                #                                     print("new_cate:{}".format(catedict))
+                #                             elif day['category'] == 'dinner':
+                #                                 if day.keys() != 'created' or day.keys() != 'creator' or day.keys() != 'category':
+                #                                     dict1 = {}
+                #                                     dict1['name'] = day['name']
+                #                                     dict1['serving_size'] = day['serving_size']
+                #                                     dict1['calories'] = day['f_calories']
+                #                                     dict1['fat'] = day['fat']
+                #                                     dict1['carbs'] = day['carbs']
+                #                                     dict1['protein'] = day['protein']
+                #                                     catedict[categry].append(dict1)
+                #                             elif day['category'] == 'snacks':
+                #                                 if day.keys() != 'created' or day.keys() != 'creator' or day.keys() != 'category':
+                #                                     dict1 = {}
+                #                                     dict1['name'] = day['name']
+                #                                     dict1['serving_size'] = day['serving_size']
+                #                                     dict1['calories'] = day['f_calories']
+                #                                     dict1['fat'] = day['fat']
+                #                                     dict1['carbs'] = day['carbs']
+                #                                     dict1['protein'] = day['protein']
+                #                                     catedict[categry].append(dict1)
+                #                             else:
+                #                                 catedict[categry].append("No updates today")
+                #                     else:
+                #                         for categry, itemlist in catedict.items():
+                #                             if day['category'] == 'breakfast':
+                #                                 if day.keys() != 'created' or day.keys() != 'creator' or day.keys() != 'category':
+                #                                     dict1 = {}
+                #                                     dict1['name'] = day['name']
+                #                                     dict1['serving_size'] = day['serving_size']
+                #                                     dict1['calories'] = day['f_calories']
+                #                                     dict1['fat'] = day['fat']
+                #                                     dict1['carbs'] = day['carbs']
+                #                                     dict1['protein'] = day['protein']
+                #                                     catedict[categry].append(dict1)
+                #                             elif day['category'] == 'lunch':
+                #                                 if day.keys() != 'created' or day.keys() != 'creator' or day.keys() != 'category':
+                #                                     dict1 = {}
+                #                                     dict1['name'] = day['name']
+                #                                     dict1['serving_size'] = day['serving_size']
+                #                                     dict1['calories'] = day['f_calories']
+                #                                     dict1['fat'] = day['fat']
+                #                                     dict1['carbs'] = day['carbs']
+                #                                     dict1['protein'] = day['protein']
+                #                                     catedict[categry].append(dict1)
+                #                                     print("alreadyder:{}".format(dict1))
+                #                             elif day['category'] == 'dinner':
+                #                                 if day.keys() != 'created' or day.keys() != 'creator' or day.keys() != 'category':
+                #                                     dict1 = {}
+                #                                     dict1['name'] = day['name']
+                #                                     dict1['serving_size'] = day['serving_size']
+                #                                     dict1['calories'] = day['f_calories']
+                #                                     dict1['fat'] = day['fat']
+                #                                     dict1['carbs'] = day['carbs']
+                #                                     dict1['protein'] = day['protein']
+                #                                     catedict[categry].append(dict1)
+                #                                     print("dinner:{}".format(catedict))
+                #                             elif day['category'] == 'snacks':
+                #                                 if day.keys() != 'created' or day.keys() != 'creator' or day.keys() != 'category':
+                #                                     dict1 = {}
+                #                                     dict1['name'] = day['name']
+                #                                     dict1['serving_size'] = day['serving_size']
+                #                                     dict1['calories'] = day['f_calories']
+                #                                     dict1['fat'] = day['fat']
+                #                                     dict1['carbs'] = day['carbs']
+                #                                     dict1['protein'] = day['protein']
+                #                                     catedict[categry].append(dict1)
+                #                             else:
+                #                                 catedict[categry].append("No updates today")
+                #                 print(catedict.keys())
 
         
 
