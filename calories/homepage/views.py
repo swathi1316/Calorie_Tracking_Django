@@ -1,4 +1,6 @@
 import datetime
+import decimal
+from django.contrib.auth import authenticate,logout
 from http.client import HTTPResponse
 
 from django.http import JsonResponse
@@ -21,8 +23,6 @@ from django.utils import timezone
 from datetime import date
 from datetime import datetime
 
-
-import os
 import requests
 from requests import request
 
@@ -82,6 +82,11 @@ def homeview(request):
     return render(request,"home.html")
 
 
+### LogOut
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
 
 
 def ApiView(param):
@@ -98,6 +103,27 @@ def ApiView(param):
     print(tweet_response)
     return tweet_response
 
+def FitnessApi(param):
+    import requests
+
+    url = "https://fitness-calculator.p.rapidapi.com/dailycalorie"
+
+    # querystring = {"age": "25", "gender": "male", "height": "180", "weight": "70", "activitylevel": "level_1"}
+    print("query:",param)
+
+    querystring = param
+
+    headers = {
+        "X-RapidAPI-Key": "7be9411e0dmshf598957837a3cf1p128d37jsncb48ee01a6ae",
+        "X-RapidAPI-Host": "fitness-calculator.p.rapidapi.com"
+    }
+
+    response = requests.request("GET", url, headers=headers, params=querystring)
+
+    print(response.text)
+
+    tweet_response = {'results': response.json()}
+    return tweet_response
 
 def SearchTemplateView(request):
     #print(request.method)
@@ -116,15 +142,27 @@ def SearchTemplateView(request):
 def userdetailview(response):
     if response.method == "POST":
         username = response.user
+        # user_details = UserDetails.objects.get(creator=username)
         form = UserForm(response.POST)
+        print(form)
         if form.is_valid():
             if UserDetails.objects.filter(creator=username).exists():
-                form.owner = username
-                form.save()
-                return redirect('details')
+                UserDetails.objects.filter(creator=username).update(birth_date=form.cleaned_data["birth_date"],
+                                                                Gender=form.cleaned_data['Gender'],weight=form.cleaned_data['weight'],weight_goal=form.cleaned_data['weight_goal'],
+                                                                       height= form.cleaned_data['height'],Goal=form.cleaned_data["Goal"],Fitness=form.cleaned_data["Fitness"])
+                return redirect('search')
             else:
-                form.save()
-                return redirect('details')
+                user = UserDetails()
+                user.birth_date = form.cleaned_data["birth_date"]
+                user.Gender = form.cleaned_data['Gender']
+                user.weight = form.cleaned_data['weight']
+                user.weight_goal = form.cleaned_data['weight_goal']
+                user.height = form.cleaned_data['height']
+                user.Goal = form.cleaned_data['Goal']
+                user.Fitness = form.cleaned_data['Fitness']
+                user.creator = username
+                user.save()
+                return redirect('home')
     else:
         form = UserForm()
     return render(response, "user/details.html", {"form": form})
@@ -159,40 +197,59 @@ def userdetailview(response):
 def UserTracking(request):
     if request.method == "POST":
         form = CaloForm(request.POST)
+        username = request.user
         if form.is_valid():
             ing_name = form.cleaned_data['name']
+            foodlist = ing_name.split()
+            foodname = foodlist[1]
+            print("foodname:",foodname)
+            quantity = foodlist[0]
             #print(ing_name)
             category = form.cleaned_data['category']
             #print(category)
-            ing_reponse =ApiView(ing_name)
+            food_respons =ApiView(ing_name)
             # print(ing_reponse)
-            ing_response = ing_reponse['results']['items']
+            food_response = food_respons['results']['items']
             # print(len(ing_response))
             # print(ing_response)
             food = Food()
-            for nutrientdict in ing_response:
-                food.name = nutrientdict['name']
-                food.category = category
-                food.f_calories = nutrientdict['calories']
-                food.serving_size = nutrientdict['serving_size_g']
-                food.fat = nutrientdict['fat_total_g']
-                food.protein = nutrientdict['protein_g']
-                food.carbs = nutrientdict['carbohydrates_total_g']
-                food.cholesterol = nutrientdict['cholesterol_mg']
-                print(request.user)
-                food.creator = request.user
-                food.save()
-            # q1 = Food.objects.filter(creator=request.user)
-            # q2 = q1.filter(created=timezone.now())
+            update_food = Food.objects.filter(creator=username).filter(created=date.today()).filter(category=category).filter(name=foodname)
+            for nutrientdict in food_response:
+                if update_food.exists():
+                    print("food exists")
+                    update_food.update(serving_size=nutrientdict['serving_size_g'],f_calories=nutrientdict['calories'],fat=nutrientdict['fat_total_g'],
+                                protein=nutrientdict['protein_g'],carbs=nutrientdict['carbohydrates_total_g'],cholesterol=nutrientdict['cholesterol_mg'])
+                    break
+                else:
+                    print("new food exists")
+                    food.name = nutrientdict['name']
+                    food.category = category
+                    food.f_calories = nutrientdict['calories']
+                    print(food.f_calories)
+                    food.serving_size = nutrientdict['serving_size_g']
+                    food.fat = nutrientdict['fat_total_g']
+                    food.protein = nutrientdict['protein_g']
+                    food.carbs = nutrientdict['carbohydrates_total_g']
+                    food.cholesterol = nutrientdict['cholesterol_mg']
+                    print(request.user)
+                    food.creator = request.user
+                    food.save()
+                # q1 = Food.objects.filter(creator=request.user)
+                # q2 = q1.filter(created=timezone.now())
     else:
         form = CaloForm()
 
     today1 = date.today()
     today = date.strftime(today1, "%m-%d-%Y")
     history = {}
-    eachday = Food.objects.filter(creator=request.user,created=date.today())
+    total_calories = 0
+    userdetails = {}
+    eachday = Food.objects.filter(creator=request.user)
+    # print(eachday)
+    for i in eachday.values():
+        print("keys:{}".format(i))
+
     for day in eachday.values():
-        print(day)
         eday = day['created']
         category = day['category']
         currentday = date.strftime(eday, "%m-%d-%Y")
@@ -206,10 +263,72 @@ def UserTracking(request):
             if category not in history[today]:
                 history[today][category] = []
             history[today][category].append(day)
+            total_calories = total_calories + day['f_calories']
+    print("history:",history)
+    print("total_calories:",total_calories)
+    userdetails = UserDetails.objects.filter(creator=request.user)
 
-    return render(request, "user/calo.html", {"form": form, "history": history})
+    userobjects = UserDetails.objects.filter(creator=request.user)
+    for object in userobjects:
+        user_age = object.age()
+    for eachrow in userdetails.values():
+        gender = eachrow['Gender']
+        weight = eachrow['weight']
+        weight_goal = eachrow['weight_goal']
+        height = eachrow['height']
+        Goal = eachrow['Goal']
+        Fitness = eachrow['Fitness']
+
+    user = {'age':user_age,'gender':gender,'weight':weight,'height':height}
+    if Fitness == 'no_exercise':
+        user['activitylevel'] = 'level_1'
+    elif Fitness == 'mild_exercise':
+        user['activitylevel'] ='level_3'
+    else:
+        user['activitylevel'] = 'level_4'
+
+    # Ideal Daily Calorie Requirements
+    user_calo_comparison = {}
+    DailyCalorieResponse = FitnessApi(user)
+    for idealcalo in DailyCalorieResponse.values():
+        # user_calo_comparison['BMR'] = idealcalo["data"]["BMR"]
+        weight_goal = idealcalo["data"]["goals"]
+        for goals,values in weight_goal.items():
+            if Goal == "maintain_weight" and goals == 'maintain weight':
+                user_calo_comparison[goals] == values
+            elif Goal == "loose_weight" and goals == 'Weight loss':
+                user_calo_comparison[goals] = values
+            elif Goal == "gain_weight" and goals == 'Weight gain':
+                user_calo_comparison[goals] = values
+
+    print(DailyCalorieResponse)
+    print("compare:",user_calo_comparison)
+    for idealreq, req in user_calo_comparison.items():
+        if type(req) is dict:
+            print(req['calory'])
+            print(total_calories)
+            context = maintain_calories(req['calory'],total_calories)
+        elif idealreq == "maintain weight":
+            context = maintain_calories(req, total_calories)
 
 
+    print("level:",context)
+
+    return render(request, "user/calo.html", {"form": form, "history": history,'user_calo_comparison':user_calo_comparison,'total_calories':total_calories,'context':context})
+
+def maintain_calories(ideal_calo,total_calories):
+    string1 = ""
+    if decimal.Decimal(ideal_calo) == total_calories:
+        string1 = "Perfect Level"
+    elif ideal_calo > total_calories:
+        addcalo = round((decimal.Decimal(ideal_calo) - total_calories),1)
+        string1 = "Increase "+str(addcalo)+" for Perfect Level"
+    else:
+        subcalo =  round((total_calories - decimal.Decimal(ideal_calo)),1)
+
+        string1 = "Reduce "+str(subcalo)+" for Perfect Level"
+
+    return string1
 
 
 

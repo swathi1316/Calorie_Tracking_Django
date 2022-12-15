@@ -21,29 +21,26 @@ class UserDetails(models.Model):
     gender = (
         ("male", "male"),
         ("female", "female"),
-        ("other", "other")
     )
     birth_date = models.DateField()
     Gender = models.CharField("Gender", max_length=50,
                             choices=gender)
     weight = models.DecimalField(
         default=1,
-        validators=[MaxValueValidator(300), MinValueValidator(1)],
+        validators=[MaxValueValidator(160), MinValueValidator(40)],
         decimal_places=1,
         max_digits=4,
      )
 
     weight_goal = models.DecimalField(
         default=1,
-        validators=[MaxValueValidator(300), MinValueValidator(1)],
+        validators=[MaxValueValidator(160), MinValueValidator(40)],
         decimal_places=1,
         max_digits=4,
     )
-    height = models.DecimalField(
-        default=0,
-        validators=[MaxValueValidator(10), MinValueValidator(0)],
-        decimal_places=1,
-        max_digits=3,
+    height = models.IntegerField(
+        default=120,
+        validators=[MaxValueValidator(230), MinValueValidator(130)],
      )
     Goal = models.CharField("Goal", max_length=50,
                                 choices=goal)
@@ -56,7 +53,9 @@ class UserDetails(models.Model):
 
     def age(self):
         import datetime
-        return int((datetime.date.today() - self.birthday).days / 365.25)
+        age = int((datetime.date.today() - self.birth_date).days / 365.25)
+        if age>=0 and age<81:
+            return age
 
 
 class Category(models.TextChoices):
@@ -70,8 +69,7 @@ class Food(models.Model):
     category = models.CharField("Category", max_length=20,
                                 choices=Category.choices, default=Category.BREAKFAST)
 
-    f_calories = AutoSlugField("Total_Calories",
-                         unique=True, always_update=False, populate_from="name")
+    f_calories = models.DecimalField("Total_Calories",max_digits=6,decimal_places=2)
 
     serving_size = models.DecimalField(max_digits=6,decimal_places=2)
     fat = models.DecimalField(max_digits=6,decimal_places=2)
@@ -83,6 +81,6 @@ class Food(models.Model):
         null=True,
         on_delete=models.CASCADE
     )
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateField(auto_now_add=True)
 
 # Create your models here.max_digits=5,

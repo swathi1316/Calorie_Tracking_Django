@@ -1,0 +1,337 @@
+.mediaViewInfo {
+	--web-view-name: diet_tracking;
+	--web-view-id: diet_tracking;
+	--web-scale-to-fit: true;
+	--web-scale-to-fit-type: width;
+	--web-scale-on-resize: true;
+	--web-enable-deep-linking: true;
+}
+:root {
+	--web-view-ids: diet_tracking;
+}
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	border: none;
+}
+#diet_tracking {
+	position: absolute;
+	width: 1920px;
+	height: 1274px;
+	background-color: rgba(255,255,255,1);
+	overflow: hidden;
+	--web-view-name: diet_tracking;
+	--web-view-id: diet_tracking;
+	--web-scale-to-fit: true;
+	--web-scale-to-fit-type: width;
+	--web-scale-on-resize: true;
+	--web-enable-deep-linking: true;
+}
+#date {
+	position: absolute;
+	width: 1584px;
+	height: 35px;
+	left: 149px;
+	top: 75px;
+	overflow: visible;
+}
+#line {
+	fill: rgba(9,18,36,1);
+}
+.line {
+	position: absolute;
+	overflow: visible;
+	width: 1584px;
+	height: 1px;
+	left: 0px;
+	top: 34px;
+}
+#Date_l {
+	left: 15px;
+	top: 0px;
+	position: absolute;
+	overflow: visible;
+	width: 180px;
+	white-space: nowrap;
+	text-align: left;
+	font-family: Tahoma;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 22px;
+	color: rgba(51,51,51,1);
+}
+#calorie {
+	left: 1473px;
+	top: 0px;
+	position: absolute;
+	overflow: visible;
+	width: 97px;
+	white-space: nowrap;
+	text-align: left;
+	font-family: Tahoma;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 22px;
+	color: rgba(51,51,51,1);
+}
+#Card {
+	position: absolute;
+	width: 500px;
+	height: 180px;
+	left: 148px;
+	top: 148px;
+	overflow: visible;
+}
+#card_base {
+	fill: rgba(255,255,255,1);
+	stroke: rgba(112,112,112,1);
+	stroke-width: 0.20000000298023224px;
+	stroke-linejoin: miter;
+	stroke-linecap: butt;
+	stroke-miterlimit: 4;
+	shape-rendering: auto;
+}
+.card_base {
+	filter: drop-shadow(3px 3px 6px rgba(0, 0, 0, 0.161));
+	position: absolute;
+	overflow: visible;
+	width: 518px;
+	height: 198px;
+	left: 0px;
+	top: 0px;
+}
+#heading {
+	left: 24px;
+	top: 19px;
+	position: absolute;
+	overflow: visible;
+	width: 255px;
+	height: 27px;
+	text-align: left;
+	font-family: Tahoma;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 22px;
+	color: rgba(85,85,85,1);
+	letter-spacing: 0.55px;
+}
+#fat {
+	position: absolute;
+	width: 137px;
+	height: 78px;
+	left: 336px;
+	top: 77px;
+	overflow: visible;
+}
+#Rectangle_6 {
+	fill: rgba(252,239,224,1);
+}
+.Rectangle_6 {
+	position: absolute;
+	overflow: visible;
+	width: 136px;
+	height: 78px;
+	left: 0px;
+	top: 0px;
+}
+#Icon_awesome-cheese {
+	fill: rgba(232,187,136,1);
+}
+.Icon_awesome-cheese {
+	overflow: visible;
+	position: absolute;
+	width: 30.286px;
+	height: 26.501px;
+	left: 15px;
+	top: 36px;
+	transform: matrix(1,0,0,1,0,0);
+}
+#n_g {
+	left: 62px;
+	top: 37px;
+	position: absolute;
+	overflow: visible;
+	width: 61px;
+	height: 24px;
+	text-align: left;
+	font-family: Tahoma;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 20px;
+	color: rgba(46,41,41,1);
+	letter-spacing: 0.55px;
+}
+#Fat_u {
+	left: 62px;
+	top: 14px;
+	position: absolute;
+	overflow: visible;
+	width: 76px;
+	height: 19px;
+	text-align: left;
+	font-family: Tahoma;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 16px;
+	color: rgba(119,119,119,1);
+	letter-spacing: 0.55px;
+}
+#protein {
+	position: absolute;
+	width: 136px;
+	height: 78px;
+	left: 180px;
+	top: 77px;
+	overflow: visible;
+}
+#Rectangle_6_w {
+	fill: rgba(237,242,219,1);
+}
+.Rectangle_6_w {
+	position: absolute;
+	overflow: visible;
+	width: 136px;
+	height: 78px;
+	left: 0px;
+	top: 0px;
+}
+#n_5g {
+	left: 63px;
+	top: 41px;
+	position: absolute;
+	overflow: visible;
+	width: 61px;
+	height: 22px;
+	text-align: left;
+	font-family: Tahoma;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 18px;
+	color: rgba(46,41,41,1);
+	letter-spacing: 0.55px;
+}
+#Protein_y {
+	left: 61px;
+	top: 12px;
+	position: absolute;
+	overflow: visible;
+	width: 76px;
+	height: 19px;
+	text-align: left;
+	font-family: Tahoma;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 16px;
+	color: rgba(119,119,119,1);
+	letter-spacing: 0.55px;
+}
+#Icon_awesome-sourcetree {
+	fill: rgba(145,161,125,1);
+}
+.Icon_awesome-sourcetree {
+	overflow: visible;
+	position: absolute;
+	width: 28.561px;
+	height: 36px;
+	transform: translate(-385px, -615px) matrix(1,0,0,1,398.7195,650.2804) rotate(-90deg);
+	transform-origin: center;
+	left: 0px;
+	top: 0px;
+}
+#carbs {
+	position: absolute;
+	width: 136px;
+	height: 78px;
+	left: 24px;
+	top: 77px;
+	overflow: visible;
+}
+#Rectangle_6_ {
+	fill: rgba(247,229,225,1);
+}
+.Rectangle_6_ {
+	position: absolute;
+	overflow: visible;
+	width: 136px;
+	height: 78px;
+	left: 0px;
+	top: 0px;
+}
+#n_5g_ {
+	left: 55px;
+	top: 39px;
+	position: absolute;
+	overflow: visible;
+	width: 61px;
+	height: 22px;
+	text-align: left;
+	font-family: Tahoma;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 18px;
+	color: rgba(46,41,41,1);
+	letter-spacing: 0.55px;
+}
+#Carbs_ {
+	left: 55px;
+	top: 12px;
+	position: absolute;
+	overflow: visible;
+	width: 76px;
+	height: 19px;
+	text-align: left;
+	font-family: Tahoma;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 16px;
+	color: rgba(119,119,119,1);
+	letter-spacing: 0.55px;
+}
+#Icon_awesome-fire-alt {
+	fill: rgba(142,89,74,1);
+}
+.Icon_awesome-fire-alt {
+	overflow: visible;
+	position: absolute;
+	width: 26.306px;
+	height: 30.064px;
+	left: 10px;
+	top: 34px;
+	transform: matrix(1,0,0,1,0,0);
+}
+#cal {
+	position: absolute;
+	width: 91.857px;
+	height: 23.651px;
+	left: 381.143px;
+	top: 19px;
+	overflow: visible;
+}
+#cal_value {
+	left: 24.857px;
+	top: 0px;
+	position: absolute;
+	overflow: visible;
+	width: 68px;
+	height: 18px;
+	text-align: left;
+	font-family: Tahoma;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 15px;
+	color: rgba(111,142,149,1);
+	letter-spacing: 0.55px;
+}
+#calorie_icon {
+	fill: rgba(111,142,149,1);
+}
+.calorie_icon {
+	overflow: visible;
+	position: absolute;
+	width: 14.782px;
+	height: 23.651px;
+	left: 0px;
+	top: 0px;
+	transform: matrix(1,0,0,1,0,0);
+}

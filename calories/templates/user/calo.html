@@ -3,12 +3,14 @@
 Tracking
 {% endblock %}
 {% load crispy_forms_tags %}
+{% load static %}
 <style>
 	.homepage{
 		background-color: #fcfbe6;
 		background-image:none;
 		}
 </style>
+{% if user.is_authenticated %}
 <div id="content" name="content" class="homepage">
 {% block content %}
 
@@ -37,15 +39,15 @@ Tracking
 			{{date1}}
 		<br>
 		 {% for category,ing in calo.items %}
-	<div class="row">
+	<div class="row ml-5">
 		{{category}}
 		<br>
 		<br>
 				{% for ing1 in ing %}
-    	<div class="col-sm-3 align-items-stretch" style="margin-top:30px" >
-       	 <div class="card padding-5 " style="width: 20rem;">
+    	<div class="col-sm-3 align-items-stretch " style="margin-top:30px" >
+       	 <div class="card padding-5 " style="width: 15rem;">
 					<div class="card-body">
-                		<h5 class="card-title"><b>{{ing1.name}}</b></h5>
+                		<h5 class="card-title"><b>{{ing1.name}}     {{ing1.serving_size}}</b></h5>
                	 		<p class="card-text">Calories {{ing1.f_calories}} g</p>
                 		<p class="card-text">carbs {{ing1.carbs}} g</p>
 						<p class="card-text">Protein {{ing1.protein}} g</p>
@@ -58,7 +60,37 @@ Tracking
 			{% endfor %}
             {% endfor %}
     {% endfor %}
-</div>
+	<br>
+	</div>
+
+		{% for idealreq, req in user_calo_comparison.items %}
+		<div class="row ml-5 my-2">
+		<div class="col-sm-3 align-items-stretch" style="margin-top:30px" >
+			<div class="card padding-0 " style="width: 24rem;">
+				{% if 'Increase' in context %}
+            		<img class="card-img-top" src="{% static 'under_weight.jpg' %}" alt="Card image cap">
+				{% endif %}
+				{% if 'Reduce' in context %}
+            		<img class="card-img-top" src="{% static 'weight_gain.jpg' %}" alt="Card image cap">
+				{% endif %}
+				{% if context == 'Perfect Level' %}
+					<img class="card-img-top" src="{% static 'maintain_weight.jpeg' %}" alt="Card image cap">
+				{% endif %}
+            <div class="card-body">
+                <h5 class="card-title"><b>Calories Consumed {{total_calories}}</b></h5>
+				{% if idealreq == 'maintain weight' %}
+					<h5 class="card-title"><b>Ideal Calories in a day {{req}}</b></h5>
+				{% else %}
+					<h5 class="card-title"><b>Ideal Calories in a Day {{req.calory}}</b></h5>
+				{% endif %}
+                <h5 style="card-title"><b>{{context}}</b></h5>
+                </br>
+            </div>
+        </div>
+	</div>
+    </div>
+    {% endfor %}
 
 {% endblock %}
 </div>
+{% endif %}

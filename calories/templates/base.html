@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css">
 	<title>{% block title %}Base{% endblock %}</title>
     {% load static %}
     <style>
         .img-fluid {
                 background-image: url({% static 'calo1.jpg' %});
-<!--                position: absolute;-->
+                position: absolute;
                 overflow-y:auto;
                 left: 0;
                 right: 0;
@@ -79,6 +79,25 @@
         <a class="nav-link" href="{% url 'register' %}">Register</a>
       </li>
     </ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              <i class="bi bi-person"></i>
+              <span class="glyphicon glyphicon-cog"></span>
+              <span class="caret"></span>User
+          </a>
+          <ul class="dropdown-menu">
+               {% if user.is_authenticated %}
+                    <li><a href="{% url 'details' %}">Personal Info</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+              {% else %}
+                    <li><a href="{% url 'login' %}">Personal Info</a></li>
+                    <li><a href="{% url 'login' %}">Logout</a></li>
+               {% endif %}
+
+          </ul>
+        </li>
+      </ul>
   </div>
     </nav>
 
