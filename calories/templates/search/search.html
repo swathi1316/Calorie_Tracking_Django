@@ -18,7 +18,12 @@
 
 
     <!--   ? &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;nutrition facts&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
-    <style>
+<style>
+ html,body
+ {
+    background-color:#e6effb;
+ }
+
 .image {
   width: 250px;
   float: left;
@@ -142,7 +147,7 @@ p {
 </style>
 <!--<img src="https://s.cdpn.io/3/NutritionFacts.gif" class="image">-->
       {% for c in tweet_response.results.items %}
-  <section class="performance-facts">
+  <section class="performance-facts"style="width: 500px;font-size: 25px;left: 680px;">
   <header class="performance-facts__header">
     <h1 class="performance-facts__title">Nutrition Facts</h1>
     <p>Serving Size of <b>{{c.name|title}}</b> (g)

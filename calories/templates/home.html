@@ -1,37 +1,23 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+        {% extends "base.html" %}
+        {% load static %}
+    <link href="{% static 'home.css' %}" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
 
 {% block title %}Home{% endblock %}
-
-<style>
-    #search
-        {
-            width: 200px;
-
-<!--            margin: 0;-->
-<!--            position: absolute;-->
-<!--            top: 50%;-->
-<!--            -ms-transform: translateY(-50%);-->
-<!--            transform: translateY(-50%);-->
-<!--            max-width:700px;-->
-<!--            width:100%;-->
-<!--            height:50vh;-->
-<!--            display:flex;-->
-<!--            align-items:center;-->
-<!--            justify-content:center;-->
-<!--            position:absolute;-->
-<!--            right:0;-->
-<!--            left:0;-->
-<!--            top:0;-->
-<!--            bottom:0;-->
-<!--            margin:auto;-->
-        }
-
-
-</style>
-
-
 <div id="content" name="content" class="homepage">
     {% block content %}
-
+    <img id="Banner" style="width:99.77%;position:fixed;height:900px;" src="{% static 'diet_banner.png' %}" srcset="{% static 'diet_banner.png' %}">
+    <a href="{% url 'search' %}"/>
     {% endblock %}
 </div>
+
+</body>

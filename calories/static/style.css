@@ -1,3 +1,50 @@
+.img-fluid {
+        background-image: url({% static 'calo1.jpg' %});
+        position: static;
+        overflow-y:auto;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        display: block;
+        width: 100%;
+        height: 100%;
+}
+
+html,body
+{
+position:relative
+}
+#navid
+{
+    height:75px;
+}
+/*#food_row
+{
+    margin-left:0px important;
+}*/
+.whole{
+margin-top: 140px;
+margin-left: 150px;
+}
+.category
+{
+}
+.calcard
+{
+    width: 356px;
+    margin-right:60px;
+    margin-bottom:50px;
+}
+
+
+nav
+{
+    text-decoration:none;
+    color:AliceBlue;
+}
+
+
+
 .mediaViewInfo {
 	--web-view-name: diet_tracking;
 	--web-view-id: diet_tracking;
@@ -77,9 +124,9 @@
 }
 #Card {
 	position: absolute;
-	width: 500px;
+	max-width: 100%;
 	height: 180px;
-	left: 148px;
+	left: 0px;
 	top: 148px;
 	overflow: visible;
 }

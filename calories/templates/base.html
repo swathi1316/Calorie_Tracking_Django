@@ -9,62 +9,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css">
 	<title>{% block title %}Base{% endblock %}</title>
     {% load static %}
-    <style>
-        .img-fluid {
-                background-image: url({% static 'calo1.jpg' %});
-                position: absolute;
-                overflow-y:auto;
-                left: 0;
-                right: 0;
-                z-index: 1;
-                display: block;
-                width: 100%;
-                height: 100%;
-<!--                -webkit-filter: blur(5px);-->
-<!--                -moz-filter: blur(5px);-->
-<!--                -o-filter: blur(5px);-->
-<!--                -ms-filter: blur(5px);-->
-<!--                filter: blur(4px);-->
 
-           }
+    <link rel="stylesheet" type="text/css" id="applicationStylesheet" href="{% static 'style.css' %}"/>
 
-
-
-
-<!--        #search-->
-<!--        {-->
-<!--            max-width:700px;-->
-<!--            width:100%;-->
-<!--            height:50vh;-->
-<!--            display:flex;-->
-<!--            align-items:center;-->
-<!--            justify-content:center;-->
-<!--            position:absolute;-->
-<!--            right:0;-->
-<!--            left:0;-->
-<!--            top:0;-->
-<!--            bottom:0;-->
-<!--            margin:auto;-->
-<!--        }-->
-
-
-        nav
-        {
-            text-decoration:none;
-            color:AliceBlue;
-        }
-
-    </style>
 </head>
 
 <body>
 
-	<nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+	<nav class="navbar navbar-expand-lg  navbar-dark bg-dark" id="navid">
     <a class="navbar-brand" href="#">Calorie</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="collapse navbar-collapse" id="navbarNav" style="font-size:18px;">
     <ul class="nav nav-pills navbar-left">
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
@@ -79,11 +36,13 @@
         <a class="nav-link" href="{% url 'register' %}">Register</a>
       </li>
     </ul>
-    <ul class="nav navbar-nav navbar-right">
+    <ul class="nav navbar-nav navbar-right" style="left:1360px;position:relative;">
         <li class="dropdown">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+            </svg>
+            <i class="bi bi-person"></i>
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-              <i class="bi bi-person"></i>
-              <span class="glyphicon glyphicon-cog"></span>
               <span class="caret"></span>User
           </a>
           <ul class="dropdown-menu">
@@ -105,17 +64,10 @@
         <div class="img-fluid">
         <div id="content" name="content" class="homepage">
                 {% block content %}
+                <a href="{% url 'search' %}" />
                 {% endblock %}
             </div>
         </div>
-
-<!--&lt;!&ndash;        <div class = "col-lg-12 col-sm-12 col-md-12 col-xs-12 ">&ndash;&gt;-->
-<!--            <div class="input-group mb-3" id="search">-->
-<!--                <div class="input-group-prepend">-->
-<!--                    <button class="btn btn-outline-secondary" type="button">Button</button>-->
-<!--                </div>-->
-<!--                <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">-->
-<!--            </div>-->
 
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

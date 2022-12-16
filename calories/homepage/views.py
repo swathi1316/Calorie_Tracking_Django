@@ -1,5 +1,7 @@
 import datetime
 import decimal
+from random import randint
+
 from django.contrib.auth import authenticate,logout
 from http.client import HTTPResponse
 
@@ -150,7 +152,7 @@ def userdetailview(response):
                 UserDetails.objects.filter(creator=username).update(birth_date=form.cleaned_data["birth_date"],
                                                                 Gender=form.cleaned_data['Gender'],weight=form.cleaned_data['weight'],weight_goal=form.cleaned_data['weight_goal'],
                                                                        height= form.cleaned_data['height'],Goal=form.cleaned_data["Goal"],Fitness=form.cleaned_data["Fitness"])
-                return redirect('search')
+                return redirect('tracking')
             else:
                 user = UserDetails()
                 user.birth_date = form.cleaned_data["birth_date"]
@@ -162,7 +164,7 @@ def userdetailview(response):
                 user.Fitness = form.cleaned_data['Fitness']
                 user.creator = username
                 user.save()
-                return redirect('home')
+                return redirect('tracking')
     else:
         form = UserForm()
     return render(response, "user/details.html", {"form": form})
@@ -195,6 +197,8 @@ def userdetailview(response):
     # # return render(request,"user/details.html")
 @login_required()
 def UserTracking(request):
+    print("user:",request.user)
+    username = request.user
     if request.method == "POST":
         form = CaloForm(request.POST)
         username = request.user
@@ -244,7 +248,16 @@ def UserTracking(request):
     history = {}
     total_calories = 0
     userdetails = {}
-    eachday = Food.objects.filter(creator=request.user)
+    user={}
+    gender = 'male'
+    user_age = 0
+    weight = 45
+    height = 130
+    Goal = ''
+    Fitness = ''
+    context=''
+    user_calo_comparison = {}
+    eachday = Food.objects.filter(creator=username)
     # print(eachday)
     for i in eachday.values():
         print("keys:{}".format(i))
@@ -266,8 +279,8 @@ def UserTracking(request):
             total_calories = total_calories + day['f_calories']
     print("history:",history)
     print("total_calories:",total_calories)
-    userdetails = UserDetails.objects.filter(creator=request.user)
 
+    userdetails = UserDetails.objects.filter(creator=request.user)
     userobjects = UserDetails.objects.filter(creator=request.user)
     for object in userobjects:
         user_age = object.age()
@@ -278,7 +291,7 @@ def UserTracking(request):
         height = eachrow['height']
         Goal = eachrow['Goal']
         Fitness = eachrow['Fitness']
-
+        print("userdata:",gender,weight,height,Goal,Fitness)
     user = {'age':user_age,'gender':gender,'weight':weight,'height':height}
     if Fitness == 'no_exercise':
         user['activitylevel'] = 'level_1'
@@ -288,20 +301,20 @@ def UserTracking(request):
         user['activitylevel'] = 'level_4'
 
     # Ideal Daily Calorie Requirements
-    user_calo_comparison = {}
     DailyCalorieResponse = FitnessApi(user)
+    print("dailycalo:",DailyCalorieResponse)
     for idealcalo in DailyCalorieResponse.values():
         # user_calo_comparison['BMR'] = idealcalo["data"]["BMR"]
-        weight_goal = idealcalo["data"]["goals"]
-        for goals,values in weight_goal.items():
+        print(idealcalo)
+        weight_goal1 = idealcalo["data"]["goals"]
+        print("weight:",weight_goal1)
+        for goals,values in weight_goal1.items():
             if Goal == "maintain_weight" and goals == 'maintain weight':
                 user_calo_comparison[goals] == values
             elif Goal == "loose_weight" and goals == 'Weight loss':
                 user_calo_comparison[goals] = values
             elif Goal == "gain_weight" and goals == 'Weight gain':
                 user_calo_comparison[goals] = values
-
-    print(DailyCalorieResponse)
     print("compare:",user_calo_comparison)
     for idealreq, req in user_calo_comparison.items():
         if type(req) is dict:
@@ -323,10 +336,12 @@ def maintain_calories(ideal_calo,total_calories):
     elif ideal_calo > total_calories:
         addcalo = round((decimal.Decimal(ideal_calo) - total_calories),1)
         string1 = "Increase "+str(addcalo)+" for Perfect Level"
-    else:
+    elif ideal_calo < total_calories:
         subcalo =  round((total_calories - decimal.Decimal(ideal_calo)),1)
 
         string1 = "Reduce "+str(subcalo)+" for Perfect Level"
+    else:
+        string1 = "No Entries of Food Today"
 
     return string1
 
