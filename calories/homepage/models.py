@@ -83,4 +83,4 @@ class Food(models.Model):
     )
     created = models.DateField(auto_now_add=True)
 
-# Create your models here.max_digits=5,
+

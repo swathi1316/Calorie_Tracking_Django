@@ -15,9 +15,11 @@
 {% block title %}Home{% endblock %}
 <div id="content" name="content" class="homepage">
     {% block content %}
-    <img id="Banner" style="width:99.77%;position:fixed;height:900px;" src="{% static 'diet_banner.png' %}" srcset="{% static 'diet_banner.png' %}">
+    <div class="banner">
+    <img id="Banner" style="margin-top:76px;width:-webkit-fill-available;;position:fixed;height:-webkit-fill-available;" src="{% static 'diet_banner.png' %}" srcset="{% static 'diet_banner.png' %}">
     <a href="{% url 'search' %}"/>
     {% endblock %}
+    </div>
 </div>
 
 </body>

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from django.contrib.auth.signals import user_logged_in
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -123,6 +124,5 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR,"static")]
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 LOGIN_URL = 'login'
-
 LOGIN_REDIRECT_URL = "/calo/tracking"
 LOGOUT_REDIRECT_URL = "/"
